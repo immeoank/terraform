@@ -1,12 +1,16 @@
-name: Manual Azure Login
+name: Provision Azure Infrastructure
 
-on: 
-  workflow_dispatch: # This allows you to run this workflow manually from the Actions tab
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment (test or prod)'
+        required: true
+        default: 'test'
 
 jobs:
-  azure-login:
-    runs-on: ubuntu-latest # or another runner environment of your choice
-
+  deploy:
+    runs-on: ubuntu-latest
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v2
@@ -14,6 +18,23 @@ jobs:
       - name: 'Login to Azure'
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_TEST }} # Use the correct secret name here
+          creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
 
-      # You can add other steps after this to perform actions in Azure
+      - name: 'Setup Terraform'
+        uses: hashicorp/setup-terraform@v1
+
+      - name: 'Terraform Init'
+        run: terraform init
+        working-directory: ./iac
+
+      - name: 'Terraform Validate'
+        run: terraform validate
+        working-directory: ./iac
+
+      - name: 'Terraform Plan'
+        run: terraform plan -out=tfplan -input=false -var "environment=${{ github.event.inputs.environment }}"
+        working-directory: ./iac
+
+      - name: 'Terraform Apply'
+        run: terraform apply -input=false tfplan
+        working-directory: ./iac
