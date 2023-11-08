@@ -32,8 +32,11 @@ jobs:
         working-directory: ./iac
 
       - name: 'Terraform Plan'
+        env:
+          TF_LOG: DEBUG
         run: terraform plan -out=tfplan -input=false -var "environment=${{ github.event.inputs.environment }}"
         working-directory: ./iac
+
 
       - name: 'Terraform Apply'
         run: terraform apply -input=false tfplan
