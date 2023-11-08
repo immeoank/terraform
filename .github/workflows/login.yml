@@ -1,0 +1,19 @@
+name: Manual Azure Login
+
+on: 
+  workflow_dispatch: # This allows you to run this workflow manually from the Actions tab
+
+jobs:
+  azure-login:
+    runs-on: ubuntu-latest # or another runner environment of your choice
+
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v2
+
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # Use the correct secret name here
+
+      # You can add other steps after this to perform actions in Azure
