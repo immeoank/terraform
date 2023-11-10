@@ -36,6 +36,7 @@ jobs:
               -backend-config="storage_account_name=sascargotftestsa" \
               -backend-config="container_name=tfstate" \
               -backend-config="key=terraform.tfstate" \
+              -backend-config="resource_group_name="sas-cargo-terraform-test-rg" \
               -backend-config="access_key=${{ secrets.BACKEND_ACCESS_KEY_TEST }}"
           fi
         working-directory: ./iac
