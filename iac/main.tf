@@ -3,9 +3,7 @@ terraform {
     # Backend config here
   }
 
-  provider "azurerm" {
-    features {}
-  }
+
 
   module "frontend_rg" {
     source   = "./modules/resource_group"
@@ -18,4 +16,7 @@ terraform {
     name     = "sascargo-${var.environment}-web-backend-rg"
     location = var.location
   }
+}
+provider "azurerm" {
+  features {}
 }
