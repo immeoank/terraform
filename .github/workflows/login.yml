@@ -24,8 +24,22 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: 'Terraform Init'
-        run: terraform init
+        run: |
+          if [ "${{ github.event.inputs.environment }}" == "prod" ]; then
+            terraform init \
+              -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME_PROD }}" \
+              -backend-config="container_name=${{ secrets.CONTAINER_NAME_PROD }}" \
+              -backend-config="key=terraform.tfstate" \
+              -backend-config="access_key=${{ secrets.BACKEND_ACCESS_KEY_PROD }}"
+          else
+            terraform init \
+              -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME_TEST }}" \
+              -backend-config="container_name=${{ secrets.CONTAINER_NAME_TEST }}" \
+              -backend-config="key=terraform.tfstate" \
+              -backend-config="access_key=${{ secrets.BACKEND_ACCESS_KEY_TEST }}"
+          fi
         working-directory: ./iac
+
 
       - name: 'Terraform Validate'
         run: terraform validate
