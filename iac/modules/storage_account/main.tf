@@ -11,7 +11,7 @@ resource "azurerm_storage_account" "sa" {
 }
 
 resource "azurerm_storage_container" "sa" {
-  name                  = "${var.container_name}${var.environment}"
+  name                  = "${var.container_name}"
   storage_account_name  = azurerm_storage_account.sa.name
   container_access_type = "${var.container_access_type}"
 }
