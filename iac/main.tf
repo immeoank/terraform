@@ -24,6 +24,8 @@ module "storage_account_back" {
   source              = "./modules/storage_account"
   resource_group_name = module.backend_rg.name
   location            = module.backend_rg.location
+  name                = "menu-items"
+  container_access_type = "public"
   environment         = "test"
   resource_group_type = "back"
 }

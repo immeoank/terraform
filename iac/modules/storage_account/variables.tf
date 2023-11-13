@@ -13,11 +13,6 @@ variable "environment" {
   type        = string
 }
 
-variable "resource_group_type" {
-  description = "The type of the resource group (front or back)"
-  type        = string
-}
-
 variable "account_tier" {
   description = "Defines the Tier to use for this storage account. (e.g., Standard)"
   type        = string
@@ -29,3 +24,16 @@ variable "account_replication_type" {
   type        = string
   default     = "LRS"
 }
+
+variable "container_access_type" {
+  description = "The access level assigned to the storage container"
+  type        = string
+  default     = "private" # Set the default to private if no value is specified
+}
+
+
+variable "name" {
+  description = "The name of the storage container"
+  type        = string
+}
+
