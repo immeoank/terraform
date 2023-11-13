@@ -1,4 +1,4 @@
-resource "azurerm_storage_account" "this" {
+resource "azurerm_storage_account" "sa" {
   name                     = "sc${var.environment}${var.resource_group_type}sa"
   resource_group_name      = var.resource_group_name
   location                 = var.location
@@ -10,9 +10,9 @@ resource "azurerm_storage_account" "this" {
   }
 }
 
-resource "azurerm_storage_container" "this" {
+resource "azurerm_storage_container" "sa" {
   name                  = "container${var.resource_group_type}${var.environment}"
-  storage_account_name  = azurerm_storage_account.this.name
+  storage_account_name  = azurerm_storage_account.sa.name
   container_access_type = "private"
 }
 
