@@ -26,6 +26,6 @@ module "storage_account_back" {
   location            = module.backend_rg.location
   container_name      = "menuitems"
   storage_account_name = "sitecore"
-  container_access_type = "public"
+  container_access_type = "blob"
   environment         = "test"
 }
