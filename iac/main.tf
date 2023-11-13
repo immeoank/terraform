@@ -27,5 +27,4 @@ module "storage_account_back" {
   name                = "menu-items"
   container_access_type = "public"
   environment         = "test"
-  resource_group_type = "back"
 }
