@@ -4,6 +4,10 @@ terraform {
   }
 }
 
+provider "azurerm" {
+  features {}
+}
+
 module "frontend_rg" {
   source   = "./modules/resource_group"
   name     = "sascargo-${var.environment}-web-frontend-rg"
@@ -16,6 +20,10 @@ module "backend_rg" {
   location = var.location
 }
 
-provider "azurerm" {
-  features {}
+module "storage_account_back" {
+  source              = "./modules/storage_account"
+  resource_group_name = module.backend_rg.name
+  location            = module.backend_rg.location
+  environment         = "test"
+  resource_group_type = "back"
 }
