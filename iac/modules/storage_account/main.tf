@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "sa" {
-  name                     = "sc${var.environment}${var.resource_group_type}sa"
+  name                     = "sc${var.environment}${var.storage_account_name}sa"
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = var.account_tier
@@ -11,9 +11,9 @@ resource "azurerm_storage_account" "sa" {
 }
 
 resource "azurerm_storage_container" "sa" {
-  name                  = "${name}${var.environment}"
+  name                  = "${var.container_name}${var.environment}"
   storage_account_name  = azurerm_storage_account.sa.name
-  container_access_type = "${container_access_type}"
+  container_access_type = "${var.container_access_type}"
 }
 
 
