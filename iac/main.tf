@@ -29,3 +29,15 @@ module "storage_account_back" {
   container_access_type = "container"
   environment         = "${var.environment}"
 }
+
+
+
+module "storage_account_back" {
+  source              = "./modules/storage_account"
+  resource_group_name = module.backend_rg.name
+  location            = module.backend_rg.location
+  container_name      = "footer"
+  storage_account_name = "sitecore"
+  container_access_type = "container"
+  environment         = "${var.environment}"
+}
